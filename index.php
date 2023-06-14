@@ -1,5 +1,5 @@
 <?php session_start();?>
-<?php $connect = new MySQLi('localhost:3306','root', 'root', 'thuvien1');?>
+<?php $connect = new MySQLi('localhost:3306','root', 'root', 'thuvien');?>
 <!DOCTYPE html>
 <html>
 

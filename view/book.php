@@ -56,7 +56,7 @@ if(isset($_POST['username'])){
 <?php
    if(isset($_GET['id'])){
     $id=$_GET['id'];
-    $connect->query("delete from book where id=$id");
+    $connect->query("delete from book where id1=$id");
     header("Location: ?option=book"); 
    }
    ?>
@@ -64,14 +64,16 @@ if(isset($_POST['username'])){
 <?php
 $option= 'book';
 
-$query="select namebook, soluong, (select sum(soluongmuon) from history where history.sachid=book.id ) as 'soluongmuon' from book where status=1";
+$query="select id1, namebook, soluong, (select sum(soluongmuon) from history where history.sachid=book.id1 ) as 'soluongmuon' from book where status=1";
 if(isset($_GET['keyword'])){
     $query.="and namebook  like '%".$_GET['keyword']."%'";//name chua tu khoa day(like)
     $option= 'show&keyword='.$_GET['keyword'];
     
 }   
 
-$result=$connect->query($query);
+$result1=$connect->query($query);
+
+
 
 
 ?>
@@ -92,17 +94,15 @@ $result=$connect->query($query);
 
     <tbody>
         <div>
-            <?php foreach($result as $item):?>
+            <?php foreach($result1 as $item):?>
             <tr>
                 <td><?=$item['namebook'];?></td>
                 <td><?=$item['soluong']?></td>
-
                 <td><?=$item['soluongmuon']?></td>
                 <td><?=$soluongconlai=$item['soluong']-$item['soluongmuon'];?></td>
-                <td><a href="?option=<?=$option?>&id=<?=$item['id']?>"
+                <td><a href="?option=<?=$option?>&id=<?=$item['id1']?>"
                         onclick="return confirm('are you sure?')">delete</a></td>
             </tr>
-
         </div>
         <?php endforeach;?>
 

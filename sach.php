@@ -1,5 +1,5 @@
 <?php session_start();?>
-<?php $connect = new MySQLi('localhost:3306','root', 'root', 'thuvien1');?>
+<?php $connect = new MySQLi('localhost:3306','root', 'root', 'thuvien');?>
 <div>
     <div>
 
@@ -9,15 +9,14 @@
 if(isset($_POST['username'])){
     $query="select * from book where status=1 and namebook  like '%".$_POST['username']."%' ";//name chua tu khoa day(like)
     $result=$connect->query($query);
-    $result=mysqli_fetch_array($result); 
-    $_SESSION['namebook']=$result['namebook'];
-    $_SESSION['idBook']=$result['id'];
-    
+    $rs=mysqli_fetch_array($result);
+    $_SESSION['idBook']=$rs['id1'];
 }   
 ?>
 
 
         <section>
+            <p><?php echo $_SESSION['idPerson']; print_r($_SESSION) ; ?></p>
             <form method="post">
                 <label>
                     <p>ten sách</p>
@@ -29,34 +28,51 @@ if(isset($_POST['username'])){
 
         <?php
         $id=$_SESSION['idBook'];
-        $query="select namebook, soluong, (select sum(soluongmuon) from history where history.sachid=book.id ) as 'soluongmuon1' from book where id=$id;";
+        $query="select namebook, soluong, (select sum(soluongmuon) from history where history.sachid=book.id1 ) as 'soluongmuon1' from book where id1=$id;";
         $result2=$connect->query($query);
-        $result2=mysqli_fetch_array($result2);
-       
-       
+        $rs2=mysqli_fetch_array($result2);
         ?>
-        <p><?=$_SESSION['namebook'];?></p>
-        <p><?=$_SESSION['idBook'];?></p>
-        <p><?=$result2['soluongmuon1']?></p>
-        <section>
             <form method="post">
-                <input type="submit" value="create" name="create">
+            <?php foreach($result as $_SESSION):?>
 
-            </form>
+            <input type="radio" name="tensach[]" value="<?=$_SESSION['id1']?>">
+            <label> <?=$_SESSION['namebook']?></label><br>
+            <?php endforeach;?>
+            <input type="submit" value="Submit" name="submit">
+
+        </form>
+
+
+<?php
+
+        if(isset($_POST['submit'])){
+            if(isset($_POST['tensach'])){
+                $_SESSION['tensach']=$_POST['tensach'];
+                foreach($_SESSION['tensach'] as $name1){
+                    $_SESSION['idBook1']=$name1;
+                    header("Location: index.php?option=history");
+                }
+                
+            }
+        }
+        
+        ?>
+
+        
             <?php
-            $a=$result2['soluongmuon1'];
-            $b=$result2['soluong'];
-if(isset($_POST['create'])){
-    if($a < $b){
-        header("Location: index.php?option=history");
-    }else{
-        echo '<script>alert("qua so luong sach"); location= "index.php?option=history";</script>';
+//             $a=$rs2['soluongmuon1'];
+//             $b=$rs2['soluong'];
+// if(isset($_POST['create'])){
+//     if($a < $b){
+//         header("Location: index.php?option=history");   
+//     }else{
+//         echo '<script>alert("qua so luong sach"); location= "index.php?option=history";</script>';
 
-    }
-}
+//     }
+// }
 ?>
 
+
         </section>
-        </form>
     </div>
 </div>
