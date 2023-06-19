@@ -22,10 +22,10 @@ if(isset($_POST['username'])){
         </section>
 
         <form method="post">
-            <?php foreach($result as $_SESSION):?>
+            <?php foreach($result as $item):?>
 
-            <input type="radio" name="ten[]" value="<?=$_SESSION['id']?>">
-            <label> <?=$_SESSION['name']?></label><br>
+            <input type="radio" name="ten[]" value="<?=$item['id']?>">
+            <label> <?=$item['name']?></label><br>
             <?php endforeach;?>
             <input type="submit" value="Submit" name="submit">
 
@@ -36,15 +36,16 @@ if(isset($_POST['username'])){
 
         if(isset($_POST['submit'])){
             if(isset($_POST['ten'])){
-                $_SESSION['ten']=$_POST['ten'];
-                foreach($_SESSION['ten'] as $name){
+                $item['ten']=$_POST['ten'];
+                
+                foreach($item['ten'] as $name){
                     
                     $_SESSION['idPerson']=$name;
                   
                 }
-                header("Location: sach.php");
+                echo $_SESSION['idPerson'];
             }
-            
+            header("Location: sach.php");
         }
         
         ?>

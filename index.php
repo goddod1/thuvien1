@@ -38,6 +38,37 @@
         right: 10px;
         cursor: pointer;
     }
+    .popup-wrapper1 {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .popup1 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 200px;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+
+    .close1 {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
     </style>
     <script>
     function openPopup() {
@@ -47,28 +78,28 @@
     function closePopup() {
         document.getElementById("popup-wrapper").style.display = "none";
     }
+    function openPopup1() {
+        document.getElementById("popup-wrapper1").style.display = "block";
+    }
+
+    function closePopup1() {
+        document.getElementById("popup-wrapper1").style.display = "none";
+    }
     </script>
 
 </head>
 
-<body class="wrapper">
-    <header>
-        <section>
-            <form>
-                <input type="hidden" name="option" value="person">
-                <input type="search" name="keyword"><input type="submit" value="search">
-            </form>
-        </section>
-    </header>
-    <nav>
-        <a href="?option=person">quan ly nguoi</a>
-        <a href="?option=book">quan ly sach</a>
-        <a href="?option=history">history</a>
+<body class="wrapper" style="background-image: url('background-mau-xanh-1.jpeg'); background-size: 100%;" >
+    
+    <nav style="height: 50px; border: none;">
+        <a href="?option=person" style="font-size: 27px; margin-top:0.6%; border-radius: 50px;">QUẢN LÝ NGƯỜI</a>
+        <a href="?option=book" style="font-size: 27px; margin-top:0.6%; border-radius: 50px;">QUẢN LÝ SÁCH</a>
+        <a href="?option=history" style="font-size: 27px; margin-top:0.6%; border-radius: 50px;">LỊCH SỬ </a>
 
     </nav>
     <section class="body">
 
-        <article>
+        <article  style="border: none; ">
             <?php
            if(isset($_GET['option'])){
             switch($_GET['option']){
@@ -81,6 +112,9 @@
                 case 'history':
                     include "view/history.php";
                     break;
+                case 'bookupdate':
+                    include "view/update.php";
+                    break;
                 }
             }
         ?>
@@ -88,7 +122,7 @@
         </article>
 
     </section>
-    <footer>footer</footer>
+
 </body>
 
 </html>

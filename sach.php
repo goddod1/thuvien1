@@ -16,7 +16,7 @@ if(isset($_POST['username'])){
 
 
         <section>
-            <p><?php echo $_SESSION['idPerson']; print_r($_SESSION) ; ?></p>
+
             <form method="post">
                 <label>
                     <p>ten sách</p>
@@ -33,43 +33,53 @@ if(isset($_POST['username'])){
         $rs2=mysqli_fetch_array($result2);
         ?>
             <form method="post">
-            <?php foreach($result as $_SESSION):?>
+            <?php foreach($result as $item1):?>
 
-            <input type="radio" name="tensach[]" value="<?=$_SESSION['id1']?>">
-            <label> <?=$_SESSION['namebook']?></label><br>
+            <input type="radio" name="tensach[]" value="<?=$item1['id1']?>">
+            <label> <?=$item1['namebook']?>(<?=$item1['theloai']?>)</label><br>
             <?php endforeach;?>
-            <input type="submit" value="Submit" name="submit">
+            <input type="submit" value="Submit" name="submit1">
 
         </form>
 
 
 <?php
-
-        if(isset($_POST['submit'])){
+$a=$rs2['soluongmuon1'];
+$b=$rs2['soluong'];
+        if(isset($_POST['submit1'])){
             if(isset($_POST['tensach'])){
-                $_SESSION['tensach']=$_POST['tensach'];
-                foreach($_SESSION['tensach'] as $name1){
-                    $_SESSION['idBook1']=$name1;
-                    header("Location: index.php?option=history");
-                }
                 
+                $item1['tensach']=$_POST['tensach'];
+                foreach($item1['tensach'] as $name1){
+                    $_SESSION['idBook1']=$name1;
+                   
+                }
+                if($a < $b){
+                    header("Location: index.php?option=history");   
+                }else{
+                    echo '<script>alert("qua so luong sach"); location= "index.php?option=history";</script>';
+            
+                }
             }
+            
         }
+    
         
         ?>
 
-        
+<p><?php echo $_SESSION['idPerson']; ?></p>
+<p><?php echo $_SESSION['idBook1']; ?></p>
             <?php
-//             $a=$rs2['soluongmuon1'];
-//             $b=$rs2['soluong'];
-// if(isset($_POST['create'])){
-//     if($a < $b){
-//         header("Location: index.php?option=history");   
-//     }else{
-//         echo '<script>alert("qua so luong sach"); location= "index.php?option=history";</script>';
+    //             $a=$rs2['soluongmuon1'];
+    //             $b=$rs2['soluong'];
+    // if(isset($_POST['create'])){
+    //     if($a < $b){
+    //         header("Location: index.php?option=history");   
+    //     }else{
+    //         echo '<script>alert("qua so luong sach"); location= "index.php?option=history";</script>';
 
-//     }
-// }
+    //     }
+    // }
 ?>
 
 

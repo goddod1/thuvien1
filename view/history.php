@@ -1,9 +1,6 @@
-<a href="nguoi.php">CREATE</a>
-<p><?php
-echo $_SESSION['idPerson'];
-echo $_SESSION["idBook1"];
-print_r($_SESSION) 
-?></p>
+<p><a href="nguoi.php">CREATE</a></p>
+<p><?php echo $_SESSION['idPerson']; ?></p>
+<p><?php echo $_SESSION['idBook1']; ?></p>
 
 
 
@@ -13,6 +10,7 @@ print_r($_SESSION)
             <th>id</th>
             <th>name</th>
             <th>ten sach</th>
+            <th>the loai</th>
             <th>soluongmuon</th>
 
 
@@ -25,15 +23,15 @@ print_r($_SESSION)
 
     <tbody class="sidebar__header--des">
         <?php
-    //     $id1=$_SESSION['idBook1'];
-    //     $qr="select namebook, soluong, (select sum(soluongmuon) from history where history.sachid=book.id1 ) as 'soluongmuon2' from book where id1=$id1";
-    //     $result3=$connect->query($qr);
-    //     $result3=mysqli_fetch_array($result3);
-    //     $c=$result3['soluong'];
-    //    $d=$result3['soluongmuon2'];
+        $id1=$_SESSION['idBook1'];
+        $qr="select namebook, soluong, (select sum(soluongmuon) from history where history.sachid=book.id1 ) as 'soluongmuon2' from book where id1=$id1";
+        $result3=$connect->query($qr);
+        $result3=mysqli_fetch_array($result3);
+        $c=$result3['soluong'];
+       $d=$result3['soluongmuon2'];
         ?>
         <?php
-        // if($c>$d){
+        if($c>$d){
             if(!empty($_SESSION['idPerson'])||!empty($_SESSION['idBook1'])){
             
                 $ss1=$_SESSION['idPerson'];
@@ -45,17 +43,16 @@ print_r($_SESSION)
                 $_SESSION['name']="";
                 $_SESSION['idPerson']=""; //nhớ phần này
             }
-        // }
+        }
         ?>
         <?php
-   if(isset($_GET['id'])){
-    $id=$_GET['id'];
-    $datetra= date("Y/m/d");
-    $connect->query("UPDATE history
-    SET ngaytra = $datetra 
-    WHERE id=$id");
-    header("Location: ?option=history"); 
-   }
+       if(isset($_GET['id2'])){
+        $id=$_GET['id2'];
+        $datetra = date("Y/m/d");
+        $connect->query("UPDATE history SET ngaytra = '$datetra'  WHERE id2 = $id;");
+        header("Location: ?option=history"); 
+       }
+
    ?>
         <?php
         $option= 'history';
@@ -68,14 +65,15 @@ print_r($_SESSION)
         <div>
             <?php foreach($result as $item):?>
             <tr>
-                <td><?=$item['id'];?></td>
+                <td><?=$item['id2'];?></td>
                 <td><?=$item['name'];?></td>
                 <td><?=$item['namebook'];?></td>
+                <td><?=$item['theloai']?></td>
                 <td><?=$item['soluongmuon']?></td>
                 <td><?=$item['ngaymuon'];?></td>
                 <td><?=$item['ngaytra'];?></td>
-                <td><a href="?option=<?=$option?>&id=<?=$item['id']?>"
-                        onclick="return confirm('are you sure?')">delete</a></td>
+                <td><a href="?option=<?=$option?>&id2=<?=$item['id2']?>"
+                        onclick="return confirm('are you sure?')">trasach</a></td>
             </tr>
             <?php endforeach;?>
         </div>

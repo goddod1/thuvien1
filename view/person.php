@@ -20,7 +20,7 @@ if(isset($_POST['username'])){
     }
 }?>
 
-<a href="#" onclick="openPopup()" style="text-decoration: none;">CREATE</a>
+<p><a href="#" onclick="openPopup()" style="text-decoration: none; margin-left: 50%; border-style: solid; font-size: 27px; border-radius: 10px; border-width: 1px; background-color:aqua">CREATE</a></p>
 
 </button>
 
@@ -74,7 +74,7 @@ if(isset($_GET['page'])){
     $page=$_GET['page'];
 }
 
-$usernamesperpage=4;
+$usernamesperpage=7;
 $from=($page-1)*$usernamesperpage;
 $totalUsernames=$connect->query($query);
 $totalPages=ceil(mysqli_num_rows($totalUsernames)/$usernamesperpage);
@@ -86,12 +86,12 @@ $result=$connect->query($query);//truy van de thuc thi
 
 
 
-<table border="1" style="width: 100%; height: 750px; text-decoration: none;text-align: center;">
+<table border="1" style="width: 100%; height: 750px; text-decoration: none; text-align: center; border-radius: 10px;">
     <thead>
         <tr>
-            <th>NAME</th>
-            <th>MSV</th>
-            <th>OPITION</th>
+            <th style="background-color: antiquewhite;">NAME</th>
+            <th style="background-color: antiquewhite;">MSV</th>
+            <th style="background-color: antiquewhite;">OPITION</th>
 
         </tr>
     </thead>
@@ -102,8 +102,8 @@ $result=$connect->query($query);//truy van de thuc thi
             <tr>
                 <td><?=$item['name'];?></td>
                 <td><?=$item['MSV']?></td>
-                <td><a href="?option=<?=$option?>&id=<?=$item['id']?>"
-                        onclick="return confirm('are you sure?')">delete</a></td>
+                <td><a style="text-decoration: none; font-size: 17px;" href="?option=<?=$option?>&id=<?=$item['id']?>"
+                        onclick="return confirm('are you sure?')">DELETE</a></td>
             </tr>
 
         </div>
@@ -112,6 +112,8 @@ $result=$connect->query($query);//truy van de thuc thi
 
     </tbody>
 </table>
+<div class="page" style="margin-left: 45%; margin-top: 2%;">
 <?php for($i=1; $i<=$totalPages; $i++):?>
-<a href="?option=<?=$option?>&page=<?=$i?>" class="custom-btn btn-1" style="margin-right: 1%;"><?=$i?></a>
+<a class="<?=(empty($_GET['page'])&&$i==1)||(isset($_GET['page'])&&$_GET['page']==$i)?'highlight':''?>" href="?option=<?=$option?>&page=<?=$i?>" style="margin-left: 5%; "><?=$i?></a>
 <?php endfor;?>
+</div>
